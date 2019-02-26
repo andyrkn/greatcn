@@ -14,26 +14,98 @@ namespace tema1
         private const double c4 = 2.7557319223985890652557319223986e-6;
         private const double c5 = 2.5052108385441718775052108385442e-8;
         private const double c6 = 1.6059043836821614599392377170155e-10;
-        private const double min = -(Math.PI)/2;
-        private const double max = Math.PI/2;
-        public List<double> randomNumbers =  new List<double>();
-        public List<string> timeToRun = new List<string>();
-        // TODO:
-        public List<string> bestPolynom = new List<string>();
 
+
+        public List<double> randomNumbers = new List<double>();
+        public List<long> timeToRun = new List<long>();
+        public List<double> bestPolynom = new List<double>();
 
         public Problem3()
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                randomNumbers.Add(GenerateRandom());
-            }
+            GenerateRandomNumbers();
+            /*
             StartSolutionPoly1();
             StartSolutionPoly2();
             StartSolutionPoly3();
             StartSolutionPoly4();
             StartSolutionPoly5();
             StartSolutionPoly6();
+            */
+            var res = Solve();
+            foreach (double d in res)
+            {
+                bestPolynom.Add(d);
+            }
+        }
+
+        private double GetError(double x, double polyResult)
+        {
+            return Math.Abs(polyResult - Math.Sin(x));
+        }
+
+        private double[] Solve()
+        {
+            double[] averagePositions = new double[7];
+
+            for (int i = 0; i < 7; i++)
+            {
+                averagePositions[i] = 0;
+            }
+
+            for (int j = 0; j < randomNumbers.Count; j++)
+            {
+                double number = randomNumbers[j];
+
+                List<KeyValuePair<int, double>> errors = new List<KeyValuePair<int, double>>();
+
+                for (int i = 1; i <= 6; i++)
+                {
+                    errors.Add(new KeyValuePair<int, double>(i, calculatePolynom(i, number)));
+                }
+
+                errors.OrderBy(x => x.Value);
+
+                for (int i = 0; i < errors.Count; i++)
+                {
+                    averagePositions[errors[i].Key] = 
+                        ((i + 1) - averagePositions[errors[i].Key]) / (j + 1) + averagePositions[errors[i].Key];
+                }
+            }
+            return averagePositions;
+        }
+
+        private double calculatePolynom(int poly, double x)
+        {
+            double polyValue = 0;
+            double error = double.MaxValue;
+
+            if (poly == 1)
+            {
+                polyValue = ResolvePolynom1(x);
+            }
+            if (poly == 2)
+            {
+                polyValue = ResolvePolynom1(x);
+            }
+            if (poly == 3)
+            {
+                polyValue = ResolvePolynom3(x);
+            }
+            if (poly == 4)
+            {
+                polyValue = ResolvePolynom4(x);
+            }
+            if (poly == 5)
+            {
+                polyValue = ResolvePolynom5(x);
+            }
+            if (poly == 6)
+            {
+                polyValue = ResolvePolynom6(x);
+            }
+
+            error = GetError(x, polyValue);
+            return error;
         }
 
         public void StartSolutionPoly1()
@@ -44,7 +116,7 @@ namespace tema1
                 ResolvePolynom1(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
 
@@ -56,7 +128,7 @@ namespace tema1
                 ResolvePolynom2(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
 
@@ -68,7 +140,7 @@ namespace tema1
                 ResolvePolynom3(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
         public void StartSolutionPoly4()
@@ -79,7 +151,7 @@ namespace tema1
                 ResolvePolynom4(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
         public void StartSolutionPoly5()
@@ -90,7 +162,7 @@ namespace tema1
                 ResolvePolynom5(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
         public void StartSolutionPoly6()
@@ -101,56 +173,62 @@ namespace tema1
                 ResolvePolynom6(d);
             }
             watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds.ToString();
+            var elapsed = watch.ElapsedMilliseconds;
             timeToRun.Add(elapsed);
         }
-        public double GetError(double x, double polyResult)
-        {
-            return Math.Abs(polyResult - Math.Sin(x));
-        }
 
-        public double ResolvePolynom1(double x)
+
+        private double ResolvePolynom1(double x)
         {
             double y = Math.Pow(x, 2);
-            double p1 = x * (1 + y * ( -c1 + y * c2));
+            double p1 = x * (1 + y * (-c1 + y * c2));
             return p1;
         }
 
-        public double ResolvePolynom2(double x)
+        private double ResolvePolynom2(double x)
         {
             double y = Math.Pow(x, 2);
             double p2 = x * (1 + y * (-c1 + y * (c2 + y * (-c3))));
             return p2;
         }
-        public double ResolvePolynom3(double x)
+        private double ResolvePolynom3(double x)
         {
             double y = Math.Pow(x, 2);
-            double p3 = x * (1 + y * (-c1 + y * (c2 + y *(-c3 + y * c4))));
+            double p3 = x * (1 + y * (-c1 + y * (c2 + y * (-c3 + y * c4))));
             return p3;
         }
-        public double ResolvePolynom4(double x)
+        private double ResolvePolynom4(double x)
         {
             double y = Math.Pow(x, 2);
             double p4 = x * (1 + y * (-0.166 + y * (0.00833 + y * (-c3 + y * c4))));
             return p4;
         }
-        public double ResolvePolynom5(double x)
+        private double ResolvePolynom5(double x)
         {
             double y = Math.Pow(x, 2);
-            double p5 = x * (1 + y * (-c1 + y * (c2 + y * (-c3 + y * (c4 + y *(-c5))))));
+            double p5 = x * (1 + y * (-c1 + y * (c2 + y * (-c3 + y * (c4 + y * (-c5))))));
             return p5;
         }
-        public double ResolvePolynom6(double x)
+        private double ResolvePolynom6(double x)
         {
             double y = Math.Pow(x, 2);
             double p6 = x * (1 + y * (-c1 + y * (c2 + y * (-c3 + y * (c4 + y * (-c5 + y * c6))))));
             return p6;
         }
 
-        public double GenerateRandom()
+        public void GenerateRandomNumbers()
         {
+
+            double min = -(Math.PI) / 2;
+            double max = Math.PI / 2;
+
             Random x = new Random();
-            return x.NextDouble() * (max - min) + min;
+
+            for (int i = 0; i < 100000; i++)
+            {
+                randomNumbers.Add(x.NextDouble() * (max - min) + min);
+            }
         }
+
     }
 }

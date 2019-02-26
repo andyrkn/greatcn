@@ -8,3 +8,13 @@ D:\School\CN\tema1\tema1\obj\Debug\tema1.csproj.CoreCompileInputs.cache
 D:\School\CN\tema1\tema1\obj\Debug\tema1.exe
 D:\School\CN\tema1\tema1\obj\Debug\tema1.pdb
 D:\School\CN\tema1\tema1\obj\Debug\tema1.tema1UI.resources
+D:\School\CN\greatcn\tema1\tema1\bin\Debug\tema1.exe.config
+D:\School\CN\greatcn\tema1\tema1\bin\Debug\tema1.exe
+D:\School\CN\greatcn\tema1\tema1\bin\Debug\tema1.pdb
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.csprojAssemblyReference.cache
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.tema1UI.resources
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.Properties.Resources.resources
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.csproj.GenerateResource.cache
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.csproj.CoreCompileInputs.cache
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.exe
+D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.pdb
