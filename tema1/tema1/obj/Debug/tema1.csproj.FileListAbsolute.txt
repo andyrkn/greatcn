@@ -18,3 +18,13 @@ D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.csproj.GenerateResource.cache
 D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.csproj.CoreCompileInputs.cache
 D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.exe
 D:\School\CN\greatcn\tema1\tema1\obj\Debug\tema1.pdb
+E:\uni\calculnumeric\greatcn\tema1\tema1\bin\Debug\tema1.exe.config
+E:\uni\calculnumeric\greatcn\tema1\tema1\bin\Debug\tema1.exe
+E:\uni\calculnumeric\greatcn\tema1\tema1\bin\Debug\tema1.pdb
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.csprojAssemblyReference.cache
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.tema1UI.resources
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.Properties.Resources.resources
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.csproj.GenerateResource.cache
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.csproj.CoreCompileInputs.cache
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.exe
+E:\uni\calculnumeric\greatcn\tema1\tema1\obj\Debug\tema1.pdb

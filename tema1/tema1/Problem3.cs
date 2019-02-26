@@ -17,25 +17,20 @@ namespace tema1
 
 
         public List<double> randomNumbers = new List<double>();
-        public List<long> timeToRun = new List<long>();
-        public List<double> bestPolynom = new List<double>();
+        public List<KeyValuePair<int,long>> timeToRun = new List<KeyValuePair<int, long>>();
+        public List<KeyValuePair<string,double>> bestPolynom = new List<KeyValuePair<string, double>>();
 
         public Problem3()
         {
             GenerateRandomNumbers();
-            /*
-            StartSolutionPoly1();
-            StartSolutionPoly2();
-            StartSolutionPoly3();
-            StartSolutionPoly4();
-            StartSolutionPoly5();
-            StartSolutionPoly6();
-            */
+  
             var res = Solve();
-            foreach (double d in res)
+            for (int i = 1; i < res.Length; i++)
             {
-                bestPolynom.Add(d);
+                var polyName = "Polynom " + i;
+                bestPolynom.Add(new KeyValuePair<string, double>(polyName, res[i]));
             }
+            bestPolynom.Sort((x, y) => x.Value.CompareTo(y.Value));
         }
 
         private double GetError(double x, double polyResult)
@@ -46,6 +41,7 @@ namespace tema1
         private double[] Solve()
         {
             double[] averagePositions = new double[7];
+            long[] polynomTicks = new long[7];
 
             for (int i = 0; i < 7; i++)
             {
@@ -60,10 +56,13 @@ namespace tema1
 
                 for (int i = 1; i <= 6; i++)
                 {
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     errors.Add(new KeyValuePair<int, double>(i, calculatePolynom(i, number)));
+                    watch.Stop();
+                    polynomTicks[i] += watch.ElapsedTicks;
                 }
 
-                errors.OrderBy(x => x.Value);
+                errors.Sort((x,y) => x.Value.CompareTo(y.Value));
 
                 for (int i = 0; i < errors.Count; i++)
                 {
@@ -71,6 +70,13 @@ namespace tema1
                         ((i + 1) - averagePositions[errors[i].Key]) / (j + 1) + averagePositions[errors[i].Key];
                 }
             }
+
+            for(int i = 1; i < polynomTicks.Length; i++)
+            {
+                timeToRun.Add(new KeyValuePair<int, long>(i, polynomTicks[i]));
+            }
+            timeToRun.Sort((x, y) => x.Value.CompareTo(y.Value));
+      
             return averagePositions;
         }
 
@@ -107,76 +113,6 @@ namespace tema1
             error = GetError(x, polyValue);
             return error;
         }
-
-        public void StartSolutionPoly1()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom1(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-
-        public void StartSolutionPoly2()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom2(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-
-        public void StartSolutionPoly3()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom3(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-        public void StartSolutionPoly4()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom4(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-        public void StartSolutionPoly5()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom5(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-        public void StartSolutionPoly6()
-        {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            foreach (double d in randomNumbers)
-            {
-                ResolvePolynom6(d);
-            }
-            watch.Stop();
-            var elapsed = watch.ElapsedMilliseconds;
-            timeToRun.Add(elapsed);
-        }
-
 
         private double ResolvePolynom1(double x)
         {
@@ -224,7 +160,7 @@ namespace tema1
 
             Random x = new Random();
 
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 randomNumbers.Add(x.NextDouble() * (max - min) + min);
             }

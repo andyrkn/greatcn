@@ -47,12 +47,22 @@ namespace tema1
         private void button3_Click(object sender, EventArgs e)
         {
             Problem3 pb3 = new Problem3();
-            MessageBox.Show("poly 1: " + pb3.timeToRun[0] + '\n'+
-                             "poly 2: " + pb3.timeToRun[1] + '\n' +
-                             "poly 3: " + pb3.timeToRun[2] + '\n' +
-                             "poly 4: " + pb3.timeToRun[3] + '\n' +
-                             "poly 5: " + pb3.timeToRun[4] + '\n' +
-                             "poly 6: " + pb3.timeToRun[5]);
+            var resString = "";
+
+            foreach(KeyValuePair<string,double> element in pb3.bestPolynom)
+            {
+                resString = resString + element.Key + " : " + element.Value + "\n";
+            }
+            
+            long freq = System.Diagnostics.Stopwatch.Frequency;
+            resString = resString + "\n\n\n\n";
+            foreach (KeyValuePair<int, long> timer in pb3.timeToRun)
+            {
+                resString = resString + "Polynom " + timer.Key + " : " + (double)timer.Value / freq * 1000.0 + " ms\n";
+                //resString = resString + "Polynom " + timer.Key + ":" + timer.Value + "\n";
+            }
+
+            MessageBox.Show(resString);
         }
 
         private void Form1_Load(object sender, EventArgs e)
