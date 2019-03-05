@@ -13,6 +13,7 @@ namespace tema2
 {
     public partial class Form1 : Form
     {
+        double[] B;
         RezolvareT2 rt2;
         public Form1()
         {
@@ -79,10 +80,11 @@ namespace tema2
         {
             string[] vectorstring = BVectorInput.Text.Split(' ');
             double[] vectordouble = new double[rt2.N];
-            for(int i = 0; i < rt2.N; i++)
+            for (int i = 0; i < rt2.N; i++)
             {
                 vectordouble[i] = double.Parse(vectorstring[i]);
             }
+            B = vectordouble;
             rt2.ComputeAxB(vectordouble);
             if (!rt2.DivisionByZeroInSystem)
             {
@@ -101,7 +103,8 @@ namespace tema2
 
         private void ComputeECNorm_Click(object sender, EventArgs e)
         {
-            double res = rt2.EuclideanNorm();
+
+            double res = rt2.EuclideanNorm(B);
             ECNormOutput.AppendText(res + "");
         }
     }

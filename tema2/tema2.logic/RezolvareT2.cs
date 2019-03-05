@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 
 namespace tema2.logic
 {
@@ -39,10 +40,36 @@ namespace tema2.logic
             return result;
         }
 
-        public double EuclideanNorm()
+        public double EuclideanNorm(double[] B)
         {
             double S = 0;
+            double[] result = new double[N];
+            //A* x - B
+            for(int i = 0; i <N; i++)
+            {
+                for(int j = 0; j< N; j++)
+                {
+                    S += Ainit[i, j] * SolX[j];  
+                }
+                result[i] = S - B[i];
+                S = 0;
+            }
+            S = 0;
+            for(int i =0; i<N; i++)
+            {
+                S += result[i] * result[i];
+            }
+            S = Math.Sqrt(S);
+
             return S;
+        }
+
+
+        public void InveresedMatrix()
+        {
+            var M = Matrix<double>.Build;
+            M.DenseOfArray(Ainit);
+            
         }
 
         public double Determinant()
