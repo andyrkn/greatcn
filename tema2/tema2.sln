@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tema2", "tema2\tema2.csproj", "{D9A17362-E906-40B9-BB87-9A1944CBAB32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tema2.logic", "tema2.logic\tema2.logic.csproj", "{877722B8-9957-4466-B7AE-FEF69642D999}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9A17362-E906-40B9-BB87-9A1944CBAB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A17362-E906-40B9-BB87-9A1944CBAB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A17362-E906-40B9-BB87-9A1944CBAB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A17362-E906-40B9-BB87-9A1944CBAB32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877722B8-9957-4466-B7AE-FEF69642D999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877722B8-9957-4466-B7AE-FEF69642D999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877722B8-9957-4466-B7AE-FEF69642D999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877722B8-9957-4466-B7AE-FEF69642D999}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B3FA4EA-011E-488E-BE32-76B868B4C0C1}
+	EndGlobalSection
+EndGlobal

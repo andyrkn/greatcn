@@ -160,7 +160,7 @@ namespace tema1
 
             Random x = new Random();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 randomNumbers.Add(x.NextDouble() * (max - min) + min);
             }
