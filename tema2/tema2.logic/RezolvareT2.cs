@@ -65,11 +65,32 @@ namespace tema2.logic
         }
 
 
-        public void InveresedMatrix()
+        public Matrix<double> InveresedMatrix()
         {
             var M = Matrix<double>.Build;
-            M.DenseOfArray(Ainit);
-            
+            var res = M.DenseOfArray(Ainit).Inverse();
+            return res;
+        }
+
+        public Vector<double> ComputeLibraryX(double[] B)
+        {
+            var matrix = Matrix<double>.Build.DenseOfArray(Ainit);
+            var res = matrix.Solve(Vector<double>.Build.DenseOfArray(B));
+            return res;
+        }
+
+        public double ComputeNorm2(double[] B)
+        {
+            var matrix = Matrix<double>.Build.DenseOfArray(Ainit).Inverse();
+            var bVector = matrix.Solve(Vector<double>.Build.DenseOfArray(B));
+            var multiplyRes = matrix.Multiply(bVector);
+            double S = 0;
+            for (int i = 0; i < N; i++)
+            {
+                S += (B[i] - multiplyRes[i]) * (B[i] - multiplyRes[i]);
+            }
+            S = Math.Sqrt(2);
+            return S;
         }
 
         public double Determinant()

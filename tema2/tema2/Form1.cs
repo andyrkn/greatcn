@@ -107,5 +107,50 @@ namespace tema2
             double res = rt2.EuclideanNorm(B);
             ECNormOutput.AppendText(res + "");
         }
+
+        private void ComputeLibraryErrorsButton_Click(object sender, EventArgs e)
+        {
+            var res = rt2.InveresedMatrix();
+            string InversedOutput = "";
+            for(int i = 0; i < rt2.N; i++)
+            {
+                for (int j = 0; j < rt2.N; j++)
+                {
+                    InversedOutput += res[i, j] + " ";
+                }
+                InversedOutput += "\n";
+            }
+
+            MatrixInversedOutput.ResetText();
+            MatrixInversedOutput.AppendText(InversedOutput);
+
+            //-------------------------------------
+
+            var LibXRes = rt2.ComputeLibraryX(B);
+            string LibraryXOutput = "";
+            foreach(double d in LibXRes)
+            {
+                LibraryXOutput += d + " ";
+            }
+
+            libXOutput.ResetText();
+            libXOutput.AppendText(LibraryXOutput);
+
+            //------------------------------------
+            double[] Norm1 = new double[rt2.N];
+            double S = 0;
+            for(int i = 0; i < rt2.N; i++)
+            {
+                Norm1[i] = rt2.SolX[i] - LibXRes[i];
+                S += Norm1[i] * Norm1[i];
+            }
+            S = Math.Sqrt(S);
+            ErrorXOutput.ResetText();
+            ErrorXOutput.AppendText(S + "");
+            //-----------------------------------------
+
+            Norm2Output.ResetText();
+            Norm2Output.AppendText(rt2.ComputeNorm2(B) + "");
+        }
     }
 }
