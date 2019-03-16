@@ -6,71 +6,72 @@ namespace T3.Logic
     public class SparseMatrix
     {
 
-        public int size { get; private set; }
-        public List<List<(double value, int column)>> matrix { get; set; }
-        public List<double> vector { get; private set; }
-        public (Boolean valid,int line) invalidMatrix { get; private set; }
+        public int Size { get; private set; }
+        public List<List<(double value, int column)>> Matrix { get; set; }
+        public List<double> Vector { get; private set; }
+        public (Boolean valid,String message) InvalidMatrix { get; private set; }
 
 
         public SparseMatrix(int n)
         {
-            size = n;
-            initMatrix();
-            vector = new List<double>();
+            Size = n;
+            InitMatrix();
+            InvalidMatrix = (valid: true, message: "");
+            Vector = new List<double>();
         }
 
         public SparseMatrix(string path)
         {
-            vector = new List<double>();
-            readFile(path);
-            sortLines();
-            checkNullElements();
+            Vector = new List<double>();
+            ReadFile(path);
+            SortLines();
+            CheckNullElements();
         }
 
         public void checkMatrix()
         {
-            checkNullElements();
+            CheckNullElements();
         }
 
         public static SparseMatrix operator +(SparseMatrix M1, SparseMatrix M2)
         {
-            SparseMatrix M3 = new SparseMatrix(M1.size);
+            SparseMatrix M3 = new SparseMatrix(M1.Size);
 
-            for (int j = 0; j < M1.size; j++)
+            for (int j = 0; j < M1.Size; j++)
             {
                 int im1 = 0, im2 = 0;
                 while(true)
                 {
-                    if (M1[j, im1].column < M2.matrix[j][im2].column)
+                    if (M1[j, im1].column < M2.Matrix[j][im2].column)
                     {
-                        M3.matrix[j].Add(M1[j, im1]);
+                        M3.Matrix[j].Add(M1[j, im1]);
                         im1++;
                     }
-                    else if (M1[j, im1].column == M2.matrix[j][im2].column)
+                    else if (M1[j, im1].column == M2.Matrix[j][im2].column)
                     {
-                        M3.matrix[j].Add((M1[j, im1].value + M2[j, im2].value, M1[j, im1].column));
+                        M3.Matrix[j].Add((M1[j, im1].value + M2[j, im2].value, M1[j, im1].column));
                         im1++; im2++;
                     }
                     else
                     {
-                        M3.matrix[j].Add(M2[j, im2]);
+                        M3.Matrix[j].Add(M2[j, im2]);
                         im2++;
                     }
-                    if (im1 >= M1.matrix[j].Count || im2 >= M2.matrix[j].Count) break;
+                    if (im1 >= M1.Matrix[j].Count || im2 >= M2.Matrix[j].Count) break;
                 }
 
-                if(im1 < M1.matrix[j].Count)
+                if(im1 < M1.Matrix[j].Count)
                 {
-                    for (; im1 < M1.matrix[j].Count; im1++)
+                    for (; im1 < M1.Matrix[j].Count; im1++)
                     {
-                        M3.matrix[j].Add(M1[j, im1]);
+                        M3.Matrix[j].Add(M1[j, im1]);
                     }
                 }
-                if (im2 < M2.matrix[j].Count)
+                if (im2 < M2.Matrix[j].Count)
                 {
-                    for (; im2 < M2.matrix[j].Count; im2++)
+                    for (; im2 < M2.Matrix[j].Count; im2++)
                     {
-                        M3.matrix[j].Add(M2[j, im2]);
+                        M3.Matrix[j].Add(M2[j, im2]);
                     }
                 }
             }
@@ -82,19 +83,19 @@ namespace T3.Logic
         {
             get
             {
-                return matrix[i][j];
+                return Matrix[i][j];
             }
         }
 
-        public string getString()
+        public string GetString()
         {
             List<string> result = new List<string>();
             int index = 0;
 
-            result.Add("" + size);
+            result.Add("" + Size);
             result.Add("\n");
 
-            foreach (var line in matrix)
+            foreach (var line in Matrix)
             {
                 foreach (var tuple in line)
                 {
@@ -105,7 +106,7 @@ namespace T3.Logic
             return String.Join("\n", result);
         }
 
-        private void readFile(string path)
+        private void ReadFile(string path)
         {
             int i = 0;
             string[] lines = System.IO.File.ReadAllLines(@path);
@@ -116,8 +117,8 @@ namespace T3.Logic
                 {
                     if (i == 0) // look for size and init matrix
                     {
-                        size = (int)Decimal.Parse(line);
-                        initMatrix();
+                        Size = int.Parse(line);
+                        InitMatrix();
                     }
                     if (i == 1) // add values and look for same i,j
                     {
@@ -126,58 +127,58 @@ namespace T3.Logic
                         var materialisedLine = (value: double.Parse(rawLine[0]), column: int.Parse(rawLine[2]));
                         var lineIndex = int.Parse(rawLine[1]);
 
-                        for (int j = 0; j < matrix[lineIndex].Count; j++)
+                        for (int j = 0; j < Matrix[lineIndex].Count; j++)
                         {
-                            if (matrix[lineIndex][j].column == materialisedLine.column)
+                            if (Matrix[lineIndex][j].column == materialisedLine.column)
                             {
-                                matrix[lineIndex][j] = (matrix[lineIndex][j].value + materialisedLine.value, matrix[lineIndex][j].column);
+                                Matrix[lineIndex][j] = (Matrix[lineIndex][j].value + materialisedLine.value, Matrix[lineIndex][j].column);
                                 succes = true;
                                 break;
                             }
                         }
                         if (!succes)
                         {
-                            matrix[lineIndex].Add(materialisedLine);
+                            Matrix[lineIndex].Add(materialisedLine);
                         }
                     }
                     if (i == 2) // add vector elements
                     {
-                        vector.Add(Double.Parse(line));
+                        Vector.Add(Double.Parse(line));
                     }
 
                 }
             }
         }
 
-        private void sortLines() // sort column elements by index
+        private void SortLines() // sort columns by index
         {
-            for (int j = 0; j < matrix.Count; j++)
+            for (int j = 0; j < Matrix.Count; j++)
             {
-                matrix[j].Sort((c1, c2) => c1.column.CompareTo(c2.column));
+                Matrix[j].Sort((c1, c2) => c1.column.CompareTo(c2.column));
             }
         }
 
-        private void checkNullElements()
+        private void CheckNullElements()
         {
-            invalidMatrix = (false, 0);
+            InvalidMatrix = (true, "");
             int index = 0;
-            foreach (var line in matrix)
+            foreach (var line in Matrix)
             {
                 if (line.Count > 12)
                 {
-                    invalidMatrix = (true, index);
+                    InvalidMatrix = (false, String.Format("Line {0}  with a count of {1}.", index, line.Count));
                     index++;
                     break;
                 }
             }
         }
 
-        private void initMatrix()
+        private void InitMatrix()
         {
-            matrix = new List<List<(double value, int column)>>();
-            for (int j = 0; j < size; j++)
+            Matrix = new List<List<(double value, int column)>>();
+            for (int j = 0; j < Size; j++)
             {
-                matrix.Add(new List<(double value, int column)>());
+                Matrix.Add(new List<(double value, int column)>());
             }
         }
     }
