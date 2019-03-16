@@ -14,6 +14,7 @@ namespace T3
         private void button1_Click(object sender, EventArgs e)
         {
             SparseMatrix a = new SparseMatrix("../../../resources/a.txt");
+            label1.Text = !a.invalidMatrix.valid ? "Valid" : "Invalid at " + a.invalidMatrix.line;
         }
     }
 }

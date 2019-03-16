@@ -15,7 +15,16 @@ namespace T3.Logic
         {
             vector = new List<double>();
             readFile(path);
+            sortLines();
             checkNullElements();
+        }
+
+        private void sortLines()
+        {
+            for(int j = 0; j < matrix.Count; j++)
+            {
+                matrix[j].Sort((c1, c2) => c1.column.CompareTo(c2.column));
+            }
         }
 
         private void checkNullElements()
