@@ -6,10 +6,18 @@ namespace T3.Logic
     public class SparseMatrix
     {
 
-        private int size;
-        private List<List<(double value, int column)>> matrix;
-        private List<double> vector;
+        public int size { get; private set; }
+        public List<List<(double value, int column)>> matrix { get; set; }
+        public List<double> vector { get; private set; }
         public (Boolean valid,int line) invalidMatrix { get; private set; }
+
+
+        public SparseMatrix(int n)
+        {
+            size = n;
+            initMatrix();
+            vector = new List<double>();
+        }
 
         public SparseMatrix(string path)
         {
@@ -19,34 +27,89 @@ namespace T3.Logic
             checkNullElements();
         }
 
-        private void sortLines()
+        public void checkMatrix()
         {
-            for(int j = 0; j < matrix.Count; j++)
+            checkNullElements();
+        }
+
+        public static SparseMatrix operator +(SparseMatrix M1, SparseMatrix M2)
+        {
+            SparseMatrix M3 = new SparseMatrix(M1.size);
+
+            for (int j = 0; j < M1.size; j++)
             {
-                matrix[j].Sort((c1, c2) => c1.column.CompareTo(c2.column));
+                int im1 = 0, im2 = 0;
+                while(true)
+                {
+                    if (M1[j, im1].column < M2.matrix[j][im2].column)
+                    {
+                        M3.matrix[j].Add(M1[j, im1]);
+                        im1++;
+                    }
+                    else if (M1[j, im1].column == M2.matrix[j][im2].column)
+                    {
+                        M3.matrix[j].Add((M1[j, im1].value + M2[j, im2].value, M1[j, im1].column));
+                        im1++; im2++;
+                    }
+                    else
+                    {
+                        M3.matrix[j].Add(M2[j, im2]);
+                        im2++;
+                    }
+                    if (im1 >= M1.matrix[j].Count || im2 >= M2.matrix[j].Count) break;
+                }
+
+                if(im1 < M1.matrix[j].Count)
+                {
+                    for (; im1 < M1.matrix[j].Count; im1++)
+                    {
+                        M3.matrix[j].Add(M1[j, im1]);
+                    }
+                }
+                if (im2 < M2.matrix[j].Count)
+                {
+                    for (; im2 < M2.matrix[j].Count; im2++)
+                    {
+                        M3.matrix[j].Add(M2[j, im2]);
+                    }
+                }
+            }
+
+            return M3;
+        }
+
+        public (double value,int column) this[int i,int j]
+        {
+            get
+            {
+                return matrix[i][j];
             }
         }
 
-        private void checkNullElements()
+        public string getString()
         {
-            invalidMatrix = (false, 0);
+            List<string> result = new List<string>();
             int index = 0;
-            foreach(var line in matrix)
+
+            result.Add("" + size);
+            result.Add("\n");
+
+            foreach (var line in matrix)
             {
-                if (line.Count > 12)
+                foreach (var tuple in line)
                 {
-                    index++;
-                    invalidMatrix = (true, index);
-                    break;
+                    result.Add(String.Format("{0},  {1},  {2}", tuple.value, index, tuple.column));
                 }
+                index++;
             }
+            return String.Join("\n", result);
         }
 
         private void readFile(string path)
         {
             int i = 0;
             string[] lines = System.IO.File.ReadAllLines(@path);
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
                 if (line == "") i++;
                 else
@@ -54,11 +117,7 @@ namespace T3.Logic
                     if (i == 0) // look for size and init matrix
                     {
                         size = (int)Decimal.Parse(line);
-                        matrix = new List<List<(double value, int column)>>();
-                        for (int j = 0; j < size; j++)
-                        {
-                            matrix.Add(new List<(double value, int column)>());
-                        }
+                        initMatrix();
                     }
                     if (i == 1) // add values and look for same i,j
                     {
@@ -87,6 +146,38 @@ namespace T3.Logic
                     }
 
                 }
+            }
+        }
+
+        private void sortLines() // sort column elements by index
+        {
+            for (int j = 0; j < matrix.Count; j++)
+            {
+                matrix[j].Sort((c1, c2) => c1.column.CompareTo(c2.column));
+            }
+        }
+
+        private void checkNullElements()
+        {
+            invalidMatrix = (false, 0);
+            int index = 0;
+            foreach (var line in matrix)
+            {
+                if (line.Count > 12)
+                {
+                    invalidMatrix = (true, index);
+                    index++;
+                    break;
+                }
+            }
+        }
+
+        private void initMatrix()
+        {
+            matrix = new List<List<(double value, int column)>>();
+            for (int j = 0; j < size; j++)
+            {
+                matrix.Add(new List<(double value, int column)>());
             }
         }
     }
