@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace T3.Logic
 {
     public class SparseMatrix
     {
-
         public int Size { get; private set; }
         public List<List<(double value, int column)>> Matrix { get; set; }
         public List<double> Vector { get; private set; }
-        public (Boolean valid,String message) InvalidMatrix { get; private set; }
-
+        public (Boolean valid, String message) InvalidMatrix { get; private set; }
 
         public SparseMatrix(int n)
         {
@@ -40,7 +39,7 @@ namespace T3.Logic
             for (int j = 0; j < M1.Size; j++)
             {
                 int im1 = 0, im2 = 0;
-                while(true)
+                while (true)
                 {
                     if (M1[j, im1].column < M2.Matrix[j][im2].column)
                     {
@@ -60,7 +59,7 @@ namespace T3.Logic
                     if (im1 >= M1.Matrix[j].Count || im2 >= M2.Matrix[j].Count) break;
                 }
 
-                if(im1 < M1.Matrix[j].Count)
+                if (im1 < M1.Matrix[j].Count)
                 {
                     for (; im1 < M1.Matrix[j].Count; im1++)
                     {
@@ -79,10 +78,89 @@ namespace T3.Logic
             return M3;
         }
 
-        public (double value,int column) this[int i,int j]
+        public static List<double> operator *(SparseMatrix M1, Vector X)
+        {
+            var result = new double[M1.Size];
+            for (int line = 0; line < M1.Size; line++)
+            {
+                result[line] = 0;
+                for (var col = 0; col < M1.Matrix[line].Count; col++)
+                {
+                    result[line] += X.XVector[M1[line, col].column] * M1[line, col].value;
+                }
+            }
+            return result.ToList();
+        }
+
+        public static SparseMatrix operator *(SparseMatrix M1, SparseMatrix M2)
+        {
+            //var result = new SparseMatrix(M1.Size);
+            //double aux;
+            //for (int i = 0; i < M1.Size; i++)
+            //{
+            //    for (int j = 0; j < M1.Matrix[i].Count; j++)
+            //    {
+            //        aux = 0;
+            //        for (int k = 0; k < M1.Matrix[i].Count; k++)
+            //        {
+            //            var col = M1[i, k].column;
+            //            //double elm1 = M1[i, k].column ? M1[i, k].value : 0;
+            //            aux += M1[i, col].value * M2[col, i].value;
+            //        }
+            //        result.Matrix[i].Add((aux, M1[i, j].column));
+            //    }
+            //}
+
+            // 1 2 3  a 0 c x11 = 1*a + 2*d + 3*g
+            // 4 5 6  d e f x12 = 1*0 + 2*e + 3*h
+            // 7 8 9  g h i
+
+            var result = new SparseMatrix(M1.Size);
+
+            for(int i=0;i<M1.Size;i++)
+            {
+                for(int j=0;j<M1.Size;j++)
+                {
+
+                }
+            }
+
+            foreach (var line in M1.Matrix)
+            {
+                foreach(var cell in line)
+                {
+                    
+                }
+            }
+
+            // for (var i = 0; i < M1.Size; i++)
+            // {
+            //     for(var j = 0; j < M2.Matrix[i].Count; j++)
+            //     {
+            //         var col = M2[i, j].column;
+            //         var val = 0d;
+            //         for (var k = 0; k < M1.Matrix[i].Count; k++)
+            //         {
+            //             val += M1[i, k].value * M2[k, col].value;
+            //         }
+            //         if (val > 0)
+            //             result.Matrix[i].Add((val, col));
+            //     }
+            // }
+
+
+            return result;
+        }
+
+        public (double value, int column) this[int i, int j]
         {
             get
             {
+                if (j >= Matrix[i].Count)
+                {
+                    return (0, j);
+                }
+
                 return Matrix[i][j];
             }
         }
