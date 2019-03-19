@@ -10,6 +10,7 @@ namespace T3
         SparseMatrix b = new SparseMatrix("../../../resources/b.txt");
         SparseMatrix sumResult = new SparseMatrix("../../../resources/aplusb.txt");
         SparseMatrix multyResult = new SparseMatrix("../../../resources/aorib.txt");
+
         public Form1()
         {
             InitializeComponent();

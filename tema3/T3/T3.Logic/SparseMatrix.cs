@@ -8,7 +8,7 @@ namespace T3.Logic
     {
         public int Size { get; private set; }
         public List<List<(double value, int column)>> Matrix { get; set; }
-        public List<double> Vector { get; private set; }
+        public Vector Vector { get; private set; }
         public (Boolean valid, String message) InvalidMatrix { get; private set; }
 
         public SparseMatrix(int n)
@@ -16,12 +16,12 @@ namespace T3.Logic
             Size = n;
             InitMatrix();
             InvalidMatrix = (valid: true, message: "");
-            Vector = new List<double>();
+            Vector = new Vector();
         }
 
         public SparseMatrix(string path)
         {
-            Vector = new List<double>();
+            Vector = new Vector();
             ReadFile(path);
             SortLines();
             CheckNullElements();
@@ -78,18 +78,22 @@ namespace T3.Logic
             return M3;
         }
 
-        public static List<double> operator *(SparseMatrix M1, Vector X)
+        public static Vector operator *(SparseMatrix M1, Vector X)
         {
             var result = new double[M1.Size];
+            Vector res = new Vector();
+
             for (int line = 0; line < M1.Size; line++)
             {
                 result[line] = 0;
                 for (var col = 0; col < M1.Matrix[line].Count; col++)
                 {
-                    result[line] += X.XVector[M1[line, col].column] * M1[line, col].value;
+                    result[line] += X._items[M1[line, col].column] * M1[line, col].value;
                 }
+                res._items.Add(result[line]);
             }
-            return result.ToList();
+            
+            return res;
         }
 
         public static SparseMatrix operator *(SparseMatrix M1, SparseMatrix M2)
