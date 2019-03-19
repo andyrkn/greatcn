@@ -94,69 +94,33 @@ namespace T3.Logic
 
         public static SparseMatrix operator *(SparseMatrix M1, SparseMatrix M2)
         {
-            //var result = new SparseMatrix(M1.Size);
-            //double aux;
-            //for (int i = 0; i < M1.Size; i++)
-            //{
-            //    for (int j = 0; j < M1.Matrix[i].Count; j++)
-            //    {
-            //        aux = 0;
-            //        for (int k = 0; k < M1.Matrix[i].Count; k++)
-            //        {
-            //            var col = M1[i, k].column;
-            //            //double elm1 = M1[i, k].column ? M1[i, k].value : 0;
-            //            aux += M1[i, col].value * M2[col, i].value;
-            //        }
-            //        result.Matrix[i].Add((aux, M1[i, j].column));
-            //    }
-            //}
+            SparseMatrix M3 = new SparseMatrix(M1.Size);
 
-            // 1 2 3  a 0 c x11 = 1*a + 2*d + 3*g
-            // 4 5 6  d e f x12 = 1*0 + 2*e + 3*h
-            // 7 8 9  g h i
-
-            var result = new SparseMatrix(M1.Size);
-
-            for(int i=0;i<M1.Size;i++)
+            for (int i = 0; i < M1.Size; i++)
             {
-                for(int j=0;j<M1.Size;j++)
+                if (M1.Matrix[i].Count > 0)
                 {
+                    for (int k = 0; k < M1.Size; k++)
+                    {
+                        double cellValue = 0;
 
+                        foreach (var cell in M1.Matrix[i])
+                        {
+                            cellValue += M2.Matrix[cell.column].Find(x => x.column == k).value * cell.value;
+                        }
+
+                        if (cellValue > 0) { M3.Matrix[i].Add((value: cellValue, column: k)); }
+                    }
                 }
             }
-
-            foreach (var line in M1.Matrix)
-            {
-                foreach(var cell in line)
-                {
-                    
-                }
-            }
-
-            // for (var i = 0; i < M1.Size; i++)
-            // {
-            //     for(var j = 0; j < M2.Matrix[i].Count; j++)
-            //     {
-            //         var col = M2[i, j].column;
-            //         var val = 0d;
-            //         for (var k = 0; k < M1.Matrix[i].Count; k++)
-            //         {
-            //             val += M1[i, k].value * M2[k, col].value;
-            //         }
-            //         if (val > 0)
-            //             result.Matrix[i].Add((val, col));
-            //     }
-            // }
-
-
-            return result;
+            return M3;
         }
 
         public (double value, int column) this[int i, int j]
         {
             get
             {
-                if (j >= Matrix[i].Count)
+               if (j >= Matrix[i].Count)
                 {
                     return (0, j);
                 }
