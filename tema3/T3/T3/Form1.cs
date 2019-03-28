@@ -47,7 +47,6 @@ namespace T3
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Vector multyResultB = new Vector(multyResult.Vector);
             Vector XVector = new Vector(multyResult.Size);
 
             if (a.InvalidMatrix.valid && b.InvalidMatrix.valid)
@@ -58,7 +57,7 @@ namespace T3
                 originalSumResult.AppendText(multyResult.GetString());
 
                 originalBOutput.ResetText();
-                originalBOutput.AppendText(multyResultB.GetString());
+                originalBOutput.AppendText(multyResult.Vector.GetString());
                 vectorBOutput.ResetText();
 
                 Vector result = new Vector(multyResult * XVector);

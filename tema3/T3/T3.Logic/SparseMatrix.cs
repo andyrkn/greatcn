@@ -82,7 +82,7 @@ namespace T3.Logic
         {
             var result = new double[M1.Size];
             Vector res = new Vector();
-
+            
             for (int line = 0; line < M1.Size; line++)
             {
                 result[line] = 0;
@@ -99,7 +99,7 @@ namespace T3.Logic
         public static SparseMatrix operator *(SparseMatrix M1, SparseMatrix M2)
         {
             SparseMatrix M3 = new SparseMatrix(M1.Size);
-
+            
             for (int i = 0; i < M1.Size; i++)
             {
                 if (M1.Matrix[i].Count > 0)
