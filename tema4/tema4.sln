@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tema4", "tema4\tema4.csproj", "{AEB7CC53-BEF4-4F31-8775-122FEBE63533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T3.Logic", "T3.Logic\T3.Logic.csproj", "{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEB7CC53-BEF4-4F31-8775-122FEBE63533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEB7CC53-BEF4-4F31-8775-122FEBE63533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEB7CC53-BEF4-4F31-8775-122FEBE63533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEB7CC53-BEF4-4F31-8775-122FEBE63533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FBFB3A6-C479-4E41-AA58-AFC31B1BDD24}
+	EndGlobalSection
+EndGlobal
