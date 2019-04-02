@@ -29,8 +29,19 @@ namespace T3.Logic
         public Vector(int n)
         {
             this.Size = n;
+            _items = new List<double>();
             Generate_items();
         }
+        
+        public void InitWith(double value,int size)
+        {
+            this.Size = size;
+            for(int i = 0; i < size; i++)
+            {
+                _items.Add(value);
+            }
+        }
+
 
         public void Add(double value)
         {
@@ -39,7 +50,6 @@ namespace T3.Logic
 
         public void Generate_items()
         {
-            _items = new List<double>();
             for (int i = 0; i < this.Size; i++)
             {
                 _items.Add(this.Size - i);

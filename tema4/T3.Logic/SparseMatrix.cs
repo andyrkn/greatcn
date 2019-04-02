@@ -119,6 +119,14 @@ namespace T3.Logic
             return M3;
         }
 
+        public Vector Solve()
+        {
+            Vector res = new Vector();
+            res.InitWith(0, this.Size);
+            //apply SOR
+            return res;
+        }
+
         public (double value, int column) this[int i, int j]
         {
             get
