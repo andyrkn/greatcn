@@ -169,7 +169,7 @@ namespace T3.Logic
                     if (i == 1) // add values and look for same i,j
                     {
                         Boolean succes = false;
-                        var rawLine = line.Replace(",", "").Split(' ');
+                        var rawLine = line.Replace(" ","").Replace(",", "").Split(' ');
                         var materialisedLine = (value: double.Parse(rawLine[0]), column: int.Parse(rawLine[2]));
                         var lineIndex = int.Parse(rawLine[1]);
 
