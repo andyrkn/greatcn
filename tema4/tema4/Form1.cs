@@ -25,7 +25,7 @@ namespace tema4
             }
             for(int i = 0;i<M.Length;i++)
             {
-                M[i].checkNotNullColumn();
+                M[i].CheckNotNullColumn();
                 if (M[i].InvalidMatrix.valid)
                 {
                     labels[i].ResetText();

@@ -79,17 +79,15 @@ namespace T3.Logic
 
         public static Vector operator *(SparseMatrix M1, Vector X)
         {
-            var result = new double[M1.Size];
             Vector res = new Vector();
+            res.InitWith(0, M1.Size);
             
             for (int line = 0; line < M1.Size; line++)
             {
-                result[line] = 0;
                 for (var col = 0; col < M1.Matrix[line].Count; col++)
                 {
-                    result[line] += X._items[M1[line, col].column] * M1[line, col].value;
+                    res[line] += X[M1[line, col].column] * M1[line, col].value;
                 }
-                res._items.Add(result[line]);
             }
             
             return res;
@@ -119,25 +117,86 @@ namespace T3.Logic
             return M3;
         }
 
-        public Vector Solve()
+        public double ComputeNormAgainst(Vector computedSolution,Vector expectedResult)
+        {
+            double res = 0;
+
+            for (int i = 0; i < computedSolution.Size; i++)
+            {
+                double sum = 0;
+                foreach(var cell in Matrix[i])
+                {
+                    sum += cell.value * computedSolution[cell.column];
+                }
+
+                res += (sum - expectedResult[i]) * (sum - expectedResult[i]);
+            }
+
+            return Math.Sqrt(res);
+        }
+
+        private double AnteriorSum(Vector solutionVector,int i)
+        {
+            double result = 0;
+
+            foreach (var cell in Matrix[i])
+            {
+                result += cell.column < i ? cell.value * solutionVector[cell.column] : 0;
+            }
+
+            return result;
+        }
+
+        private double PosteriorSum(Vector solutionVector, int i)
+        {
+            double result = 0;
+
+            foreach (var cell in Matrix[i])
+            {
+                result += cell.column > i ? cell.value * solutionVector[cell.column] : 0;
+            }
+
+            return result;
+        }
+
+        public (Vector vector, uint iterations) Solve(double omega, uint iterations, Vector vector)
         {
             Vector res = new Vector();
             res.InitWith(0, this.Size);
-            //apply SOR
-            return res;
+
+            for (int j = 1; j < iterations; j++)
+            {
+                Vector currentSolution = new Vector(res);
+                for (int i = 0; i < res.Size; i++)
+                {
+                    res[i] = (1 - omega) * res[i] +
+                        omega / Matrix[i].Find(x => x.column == i).value *
+                        (vector[i] - AnteriorSum(res, i) - PosteriorSum(res, i));
+                }
+                double norm = currentSolution.ComputeNormAgainst(res);
+                if (norm < 0.000001)
+                {
+                    iterations = (uint)j;
+                    break;
+                }
+            }
+            return (res, iterations);
         }
 
         public (double value, int column) this[int i, int j]
         {
             get
             {
-               if (j >= Matrix[i].Count)
+                // can someone remind me why i did this?
+                /*
+                if (j >= Matrix[i].Count)
                 {
                     return (0, j);
                 }
-
+                */
                 return Matrix[i][j];
             }
+            set => Matrix[i][j] = value;
         }
 
         public string GetString()
@@ -159,7 +218,7 @@ namespace T3.Logic
             return String.Join("\n", result);
         }
 
-        public void checkNotNullColumn()
+        public void CheckNotNullColumn()
         {
             for(int line = 0;line < Size; line++)
             {

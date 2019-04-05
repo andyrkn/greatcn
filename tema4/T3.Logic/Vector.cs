@@ -9,7 +9,7 @@ namespace T3.Logic
     public class Vector
     {
         public int Size { get; private set; }
-        public List<double> _items { get; private set; }
+        private List<double> _items;
 
         public Vector()
         {
@@ -42,7 +42,6 @@ namespace T3.Logic
             }
         }
 
-
         public void Add(double value)
         {
             this._items.Add(value);
@@ -69,5 +68,25 @@ namespace T3.Logic
             }
             return String.Join("\n", result);
         }
+
+        public double this[int i]
+        {
+            get => this._items[i];
+            set => this._items[i] = value;
+
+        }
+
+        public double ComputeNormAgainst(Vector vector)
+        {
+            double res = 0;
+
+            for (int i = 0; i < this.Size; i++)
+            {
+                res += (this[i] - vector[i]) * (this[i] - vector[i]);
+            }
+
+            return Math.Sqrt(res);
+        }
     }
 }
+ 
