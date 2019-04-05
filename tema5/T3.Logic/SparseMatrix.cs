@@ -27,6 +27,22 @@ namespace T3.Logic
             // CheckNullElements();
         }
 
+        public static SparseMatrix CopySparseMatrix(SparseMatrix M)
+        {
+            SparseMatrix result = new SparseMatrix(M.Size);
+            result.Vector = new Vector(M.Vector);
+
+            for(int i = 0;i<M.Size;i++)
+            {
+                foreach(var cell in M.Matrix[i])
+                {
+                    result.Matrix[i].Add(cell);
+                }
+            }
+
+            return result;
+        }
+
         public static SparseMatrix RandomSparseSymmetricalMatrix(int size,int elementsPerLine)
         {
             SparseMatrix res = new SparseMatrix(size);

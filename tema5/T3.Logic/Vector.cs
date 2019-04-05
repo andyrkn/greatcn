@@ -11,11 +11,13 @@ namespace T3.Logic
         public int Size { get; private set; }
         private List<double> _items;
 
+        //empty vector
         public Vector()
         {
             this._items = new List<double>();
         }
 
+        //vector copy
         public Vector(Vector v)
         {
             Size = v.Size;
@@ -26,6 +28,7 @@ namespace T3.Logic
             }
         }
 
+        //generates a n, n-1, ..... 0
         public Vector(int n)
         {
             this.Size = n;
@@ -39,6 +42,27 @@ namespace T3.Logic
             for(int i = 0; i < size; i++)
             {
                 _items.Add(value);
+            }
+        }
+
+        public void InitRandom(int size)
+        {
+            Size = size;
+            Random r = new Random();
+            for(int i = 0; i < Size; i++)
+            {
+                _items.Add(r.NextDouble() * 5);
+            }
+
+        }
+
+        public void Normalize()
+        {
+            double norm = ComputeSelfNorm();
+
+            for(int i = 0; i < Size; i++)
+            {
+                this[i] /= norm;
             }
         }
 
@@ -59,14 +83,15 @@ namespace T3.Logic
         {
             List<string> result = new List<string>();
 
-            result.Add("" + this._items.Count);
-            result.Add("\n");
+            result.Add(string.Format("Size: {0}", this._items.Count));
 
             foreach (var line in _items)
             {
-                result.Add(String.Format("{0}", line));
+                result.Add(string.Format("{0}", line));
             }
-            return String.Join("\n", result);
+
+            result.Add("\n");
+            return string.Join("\n", result);
         }
 
         public double this[int i]
@@ -86,6 +111,30 @@ namespace T3.Logic
             }
 
             return Math.Sqrt(res);
+        }
+
+        public double ComputeSelfNorm()
+        {
+            double res = 0;
+
+            foreach(var val in _items)
+            {
+                res += val * val;
+            }
+
+            return Math.Sqrt(res);
+        }
+
+        public static Vector operator *(Vector vec,double val)
+        {
+            Vector res = new Vector(vec);
+
+            for(int i = 0; i < res.Size; i++)
+            {
+                res[i] = res[i] * val;
+            }
+
+            return res;
         }
     }
 }

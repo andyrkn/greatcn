@@ -26,9 +26,26 @@ namespace ConsoleRunner
         public static void RunOwnTestCase()
         {
             SparseMatrix M = SparseMatrix.RandomSparseSymmetricalMatrix(5, 2);
-            // Console.WriteLine(M.GetString());
+            Console.WriteLine(string.Format("{0}\n",M.GetString()));
             M.CheckSymmetricalMatrixRules();
-            Console.WriteLine("{0} {1}", M.InvalidMatrix.valid, M.InvalidMatrix.message);
+            Console.WriteLine("Symmetrical matrix : {0} {1}", M.InvalidMatrix.valid, M.InvalidMatrix.message);
+
+            SparseMatrix M0 = SparseMatrix.CopySparseMatrix(M);
+            Vector randomVec = new Vector();
+            randomVec.InitRandom(M.Size);
+            randomVec.Normalize();
+
+            /*
+            for(int i = 0; i < 10; i++)
+            {
+                M = M * M;
+                Vector bound = M * randomVec;
+                Vector possibleSolution = bound * (1/(bound.ComputeSelfNorm()));
+                
+                // TODO write vector product
+                Console.WriteLine(M0.ComputeNormAgainst(possibleSolution, randomVec * possibleSolution));
+            }
+            */
         }
 
         static void Main(string[] args)
