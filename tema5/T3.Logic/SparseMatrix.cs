@@ -197,6 +197,26 @@ namespace T3.Logic
 
             return Math.Sqrt(res);
         }
+        
+        public (double, Vector) ComputeEigenPair(uint iterations)
+        {
+            double eigenValue = 0;
+
+            Vector randomVec = new Vector();
+            randomVec.InitRandom(Size);
+            randomVec.Normalize();
+            
+            Vector eigenVector = this * randomVec;
+            eigenValue = eigenVector.DivideByDominant();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                eigenVector = this * eigenVector;
+                eigenValue = eigenVector.DivideByDominant();
+            }
+
+            return (eigenValue, eigenVector);
+        }
 
         private double AnteriorSum(Vector solutionVector,int i)
         {
@@ -338,7 +358,7 @@ namespace T3.Logic
             }
         }
 
-        private void SortLines() // sort columns by index
+        private void SortLines()
         {
             for (int j = 0; j < Matrix.Count; j++)
             {

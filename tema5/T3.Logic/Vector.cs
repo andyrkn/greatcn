@@ -66,6 +66,18 @@ namespace T3.Logic
             }
         }
 
+        // returns eigenvalue and leaves behind an eigenvector
+        public double DivideByDominant()
+        {
+            double max = double.MinValue;
+            foreach(var x in _items)
+            {
+                if (x > max) { max = x; }
+            }
+            for(int i = 0; i < Size; i++) { this[i] /= max; }
+            return max;
+        }
+
         public void Add(double value)
         {
             this._items.Add(value);
@@ -82,8 +94,6 @@ namespace T3.Logic
         public string GetString()
         {
             List<string> result = new List<string>();
-
-            result.Add(string.Format("Size: {0}", this._items.Count));
 
             foreach (var line in _items)
             {
