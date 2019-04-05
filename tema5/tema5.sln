@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tema5", "tema5\tema5.csproj", "{62501F07-FA7F-46DD-BE56-34C9368FEB83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T3.Logic", "T3.Logic\T3.Logic.csproj", "{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleRunner", "ConsoleRunner\ConsoleRunner.csproj", "{BC1019B0-1A6B-42AB-91C9-941E8818F151}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62501F07-FA7F-46DD-BE56-34C9368FEB83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62501F07-FA7F-46DD-BE56-34C9368FEB83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62501F07-FA7F-46DD-BE56-34C9368FEB83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62501F07-FA7F-46DD-BE56-34C9368FEB83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8CC2EF-945B-4ECB-8DEE-4ED6C859788A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1019B0-1A6B-42AB-91C9-941E8818F151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1019B0-1A6B-42AB-91C9-941E8818F151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1019B0-1A6B-42AB-91C9-941E8818F151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1019B0-1A6B-42AB-91C9-941E8818F151}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F72A28E-88E1-49F5-8708-818CFF72F472}
+	EndGlobalSection
+EndGlobal
