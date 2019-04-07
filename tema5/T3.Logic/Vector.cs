@@ -72,7 +72,7 @@ namespace T3.Logic
             double max = double.MinValue;
             foreach(var x in _items)
             {
-                if (x > max) { max = x; }
+                if (Math.Abs(x) > max) { max = Math.Abs(x); }
             }
             for(int i = 0; i < Size; i++) { this[i] /= max; }
             return max;

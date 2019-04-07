@@ -26,7 +26,7 @@ namespace T3.Logic
             SortLines();
             // CheckNullElements();
         }
-
+        
         public static SparseMatrix CopySparseMatrix(SparseMatrix M)
         {
             SparseMatrix result = new SparseMatrix(M.Size);

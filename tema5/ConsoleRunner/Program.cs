@@ -39,10 +39,36 @@ namespace ConsoleRunner
             Console.WriteLine(eigenVector.GetString());
         }
 
+        public static void DenseMatrixCase()
+        {
+            DenseMatrix M = new DenseMatrix("../../../resources/m_rar_sim_2019_2019.txt");
+            var decomp = M.SVDecomp();
+            var singularValues = decomp.SingularValues;
+
+            // alternative
+            // var rangFromSVs = DenseMatrix.Rank(singularValues);
+            var rankFromSV = M.Rank();
+            var rankFromLib = decomp.Rank;
+            // alternative
+            // var conditionalNumber = DenseMatrix.ConditionalNumber(singularValues);
+            var conditionalNumber = M.ConditionalNumberFromSV();
+
+            //Console.WriteLine(singularValues);
+            Console.WriteLine(string.Format("Matrix Rank: {0}",rankFromSV));
+            Console.WriteLine(string.Format("Matrix Rank From Library: {0}", rankFromLib));
+            Console.WriteLine(string.Format("Conditional Number: {0}", conditionalNumber));
+            //Singular Values Vector
+            //Console.WriteLine(singularValues);
+
+            //PseudoMooreInverse
+            var PseudoMooreInverse = M.PseudoMooreInverse();
+        }
+
         static void Main(string[] args)
         {
             //RunTestCases();
-            RunOwnTestCase();
+            //RunOwnTestCase();
+            DenseMatrixCase();
         }
     }
 }
