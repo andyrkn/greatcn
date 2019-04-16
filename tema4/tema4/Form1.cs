@@ -8,6 +8,7 @@ namespace tema4
     {
 
         SparseMatrix[] M;
+        
 
         public Form1()
         {
@@ -41,22 +42,25 @@ namespace tema4
 
         private void SolveBtn_Click(object sender, EventArgs e)
         {
+            TextBox[] Det = {DetM1Output, DetM2Output, DetM3Output, DetM4Output, DetM5Output};
+            TextBox[] SOR = {SorM1Output, SorM2Output, SorM3Output, SorM4Output, SorM5Output};
+
             uint MaxIterations;
             uint.TryParse(MaxIterInput.Text, out MaxIterations);
             double omega = Double.Parse(omegaInput.Text);
 
             for (int i = 1; i <= 5; i++)
             {
-                SparseMatrix M = new SparseMatrix("../../../resources/m_rar_2019_" + i + ".txt");
-                var (vector, iterations) = M.Solve(omega, MaxIterations, M.Vector);
+                var (vector, iterations) = M[i - 1].Solve(omega, MaxIterations, M[i - 1].Vector);
 
-
-
-                //Console.WriteLine("-----File m_rar_2019_{0}.txt-----", i);
-                //Console.WriteLine("||Ax - b||: {0}", M.ComputeNormAgainst(vector, M.Vector));
-                //Console.WriteLine("SOR iterations: {0}\n", iterations);
-
+                Det[i-1].Text = M[i - 1].ComputeNormAgainst(vector, M[i - 1].Vector).ToString();
+                SOR[i-1].Text = iterations.ToString();
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
