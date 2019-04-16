@@ -1,4 +1,4 @@
-﻿using T3.Logic;
+﻿  using T3.Logic;
 using System;
 using CenterSpace.NMath.Core;
 
@@ -76,9 +76,8 @@ namespace ConsoleRunner
 
         static void Main(string[] args)
         {
-            // RunTestCases();
-            // RunOwnTestCase();
-            // DenseMatrixCase();
+            //RunOwnTestCase();
+            DenseMatrixCase();
         }
     }
 }

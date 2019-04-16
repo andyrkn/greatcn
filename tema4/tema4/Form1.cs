@@ -8,6 +8,7 @@ namespace tema4
     {
 
         SparseMatrix[] M;
+        
 
         public Form1()
         {
@@ -37,6 +38,29 @@ namespace tema4
                     labels[i].Text = "M" + i + " invalid at " + M[i].InvalidMatrix.message;
                 }
             }
+        }
+
+        private void SolveBtn_Click(object sender, EventArgs e)
+        {
+            TextBox[] Det = {DetM1Output, DetM2Output, DetM3Output, DetM4Output, DetM5Output};
+            TextBox[] SOR = {SorM1Output, SorM2Output, SorM3Output, SorM4Output, SorM5Output};
+
+            uint MaxIterations;
+            uint.TryParse(MaxIterInput.Text, out MaxIterations);
+            double omega = Double.Parse(omegaInput.Text);
+
+            for (int i = 1; i <= 5; i++)
+            {
+                var (vector, iterations) = M[i - 1].Solve(omega, MaxIterations, M[i - 1].Vector);
+
+                Det[i-1].Text = M[i - 1].ComputeNormAgainst(vector, M[i - 1].Vector).ToString();
+                SOR[i-1].Text = iterations.ToString();
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
