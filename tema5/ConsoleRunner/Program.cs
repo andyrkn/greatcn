@@ -1,4 +1,4 @@
-﻿using T3.Logic;
+﻿  using T3.Logic;
 using System;
 
 namespace ConsoleRunner
@@ -69,6 +69,7 @@ namespace ConsoleRunner
             //RunTestCases();
             //RunOwnTestCase();
             DenseMatrixCase();
+            System.Console.ReadLine();
         }
     }
 }

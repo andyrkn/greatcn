@@ -22,7 +22,10 @@ namespace ConsoleRunner
                 Console.WriteLine("-----File m_rar_2019_{0}.txt-----", i);
                 Console.WriteLine("||Ax - b||: {0}", M.ComputeNormAgainst(vector, M.Vector));
                 Console.WriteLine("SOR iterations: {0}\n", iterations);
+
             }
+
+            System.Console.Read();
         }
     }
 }
