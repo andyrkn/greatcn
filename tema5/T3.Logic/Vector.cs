@@ -146,6 +146,11 @@ namespace T3.Logic
 
             return res;
         }
+
+        public List<double> GetItems()
+        {
+            return this._items;
+        }
     }
 }
  

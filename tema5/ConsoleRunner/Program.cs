@@ -1,5 +1,6 @@
 ﻿using T3.Logic;
 using System;
+using CenterSpace.NMath.Core;
 
 namespace ConsoleRunner
 {
@@ -61,14 +62,23 @@ namespace ConsoleRunner
             //Console.WriteLine(singularValues);
 
             //PseudoMooreInverse
-            var PseudoMooreInverse = M.PseudoMooreInverse();
+            var PMI = M.PseudoMooreInverse();
+            var v = new DoubleVector(new Vector(M.Size).GetItems().ToArray());
+
+            // var xI = NMathFunctions.Product(PMI, v);
+            // var xRes = NMathFunctions.Solve(PMI, v);
+            // Console.WriteLine(NMathFunctions.Product(PMI, xRes));
+
+            var xREs = M.Solve(v);
+            var norm = M.ComputeNormAgainst(v, xREs);
+            Console.WriteLine(norm);
         }
 
         static void Main(string[] args)
         {
-            //RunTestCases();
-            //RunOwnTestCase();
-            DenseMatrixCase();
+            // RunTestCases();
+            // RunOwnTestCase();
+            // DenseMatrixCase();
         }
     }
 }

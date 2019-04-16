@@ -5,7 +5,8 @@ namespace T3.Logic
 {
     public class DenseMatrix
     {
-        private int Size;
+        public Vector Vector;
+        public int Size;
         private readonly DoubleMatrix Matrix;
         private DoubleSVDecomp MatrixSVDecomp;
 
@@ -68,6 +69,16 @@ namespace T3.Logic
             return MatrixSVDecomp.RightVectors * S * MatrixSVDecomp.LeftVectors.Transpose();
         }
 
+        public DoubleVector Solve(DoubleVector v)
+        {
+            return NMathFunctions.Solve(Matrix, v);
+        }
+
+        public double ComputeNormAgainst(DoubleVector b,DoubleVector xRes)
+        {
+            return (new DoubleVector(b - NMathFunctions.Product(Matrix, xRes)).TwoNorm());
+        }
+        
         public double this[int i,int j]
         {
             get => Matrix[i, j];
