@@ -1,4 +1,5 @@
-﻿using CenterSpace.NMath.Core;
+﻿using System;
+using CenterSpace.NMath.Core;
 using CenterSpace.NMath.Matrix;
 
 namespace T3.Logic
@@ -68,17 +69,18 @@ namespace T3.Logic
             }
             return MatrixSVDecomp.RightVectors * S * MatrixSVDecomp.LeftVectors.Transpose();
         }
-
+        public double LibaryConditinalNumber()
+        {
+            return NMathFunctions.ConditionNumber(NMathFunctions.TransposeProduct(Matrix, Matrix), NormType.OneNorm);
+        }
         public DoubleVector Solve(DoubleVector v)
         {
             return NMathFunctions.Solve(Matrix, v);
         }
-
         public double ComputeNormAgainst(DoubleVector b,DoubleVector xRes)
         {
             return (new DoubleVector(b - NMathFunctions.Product(Matrix, xRes)).TwoNorm());
         }
-        
         public double this[int i,int j]
         {
             get => Matrix[i, j];

@@ -44,7 +44,7 @@ namespace ConsoleRunner
         {
             DenseMatrix M = new DenseMatrix("../../../resources/m_rar_sim_2019_2019.txt");
             var decomp = M.SVDecomp();
-            var singularValues = decomp.SingularValues;
+            // var singularValues = decomp.SingularValues;
 
             // alternative
             // var rangFromSVs = DenseMatrix.Rank(singularValues);
@@ -53,11 +53,14 @@ namespace ConsoleRunner
             // alternative
             // var conditionalNumber = DenseMatrix.ConditionalNumber(singularValues);
             var conditionalNumber = M.ConditionalNumberFromSV();
+            var libraryConditionalNumber = M.LibaryConditinalNumber();
 
             //Console.WriteLine(singularValues);
-            Console.WriteLine(string.Format("Matrix Rank: {0}",rankFromSV));
-            Console.WriteLine(string.Format("Matrix Rank From Library: {0}", rankFromLib));
-            Console.WriteLine(string.Format("Conditional Number: {0}", conditionalNumber));
+
+            Console.WriteLine(string.Format("Matrix Rank: {0}\n\n",rankFromSV));
+            Console.WriteLine(string.Format("Matrix Rank From Library: {0}\n\n", rankFromLib));
+            Console.WriteLine(string.Format("Conditional Number: {0}\n\n", conditionalNumber));
+
             //Singular Values Vector
             //Console.WriteLine(singularValues);
 
@@ -76,8 +79,9 @@ namespace ConsoleRunner
 
         static void Main(string[] args)
         {
-            //RunOwnTestCase();
-            DenseMatrixCase();
+            //RunTestCases();
+            RunOwnTestCase();
+            //DenseMatrixCase();
         }
     }
 }
