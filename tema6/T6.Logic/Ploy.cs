@@ -17,13 +17,11 @@ namespace T6.Logic
         {
             get { return coefficients; }
         }
-
-        private Dictionary<int, long> roots;
-        private Tuple<long, long> interval;
-        private string poly;
-        private int degree;
-        private double epsilon = 1E-8;
-
+        public Dictionary<int, long> roots;
+        public Tuple<long, long> interval;
+        public string poly;
+        public int degree;
+        public double epsilon = 1E-10;
 
         public Poly()
         {
@@ -58,7 +56,7 @@ namespace T6.Logic
             long R = (Math.Abs(a0) + A)/Math.Abs(a0);
 
             interval = Tuple.Create(-R, R);
-            Console.WriteLine(" [" + interval.Item1 + " , " + interval.Item2 + "]");
+            //Console.WriteLine(" [" + interval.Item1 + " , " + interval.Item2 + "]");
         }
 
         private long GetRandom()
@@ -93,7 +91,10 @@ namespace T6.Logic
             } while (Math.Abs(delta) >= epsilon && k <= 30000 && Math.Abs(delta) <= Math.Pow(10, 8));
 
             if (Math.Abs(delta) < epsilon)
+            {
+                roots.Add(roots.Count, x);
                 return x;
+            }
             else
             {
                 return ComputeHalley();
@@ -103,17 +104,12 @@ namespace T6.Logic
         public Dictionary<int, long> ComputeDerivative(Dictionary<int, long> p)
         {
             Dictionary<int, long> derivative = new Dictionary<int, long>();
-
             foreach (var c in p)
             {
                 if(c.Key != 0)
                     derivative.Add(c.Key-1, (c.Value * c.Key));
             }
 
-            //foreach (var d in derivative)
-            //{
-            //    Console.WriteLine(d.Key + " :: " + d.Value);
-            //}
             return derivative;
         }
 
@@ -122,15 +118,9 @@ namespace T6.Logic
             long result = 0;
             foreach (var p in polyDictionary)
             {
-                result += p.Value * x;
+                result += p.Value;
+                result *= x;
             }
-
-            //for (int i = 1; i < (p.Count - 1); i++)
-            //{
-            //    result += p[i];
-            //    result *= x;
-            //}
-            //result += p[p.Count - 1];
 
             return result;
         }
