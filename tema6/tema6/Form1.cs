@@ -30,7 +30,11 @@ namespace tema6
                 IntervalOutput.ResetText();
                 IntervalOutput.Text = " [ " + poly.interval.Item1 + ", " + poly.interval.Item2 + " ]";
 
-                poly.ComputeHalley();
+                for (int i = 0; i < 500; i++)
+                {
+                    poly.ComputeHalley();
+
+                }
 
                 RootsOutput.ResetText();
                 foreach (var r in poly.roots)

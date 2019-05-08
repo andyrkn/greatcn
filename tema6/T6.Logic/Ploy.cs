@@ -12,13 +12,13 @@ namespace T6.Logic
     public class Poly
     {
         //                       power , coeff
-        private Dictionary<int, long> coefficients;
-        public Dictionary<int, long> Coefficients
+        private Dictionary<int, double> coefficients;
+        public Dictionary<int, double> Coefficients
         {
             get { return coefficients; }
         }
-        public Dictionary<int, long> roots;
-        public Tuple<long, long> interval;
+        public Dictionary<int, double> roots;
+        public Tuple<double, double> interval;
         public string poly;
         public int degree;
         public double epsilon = 1E-10;
@@ -26,7 +26,8 @@ namespace T6.Logic
         public Poly()
         {
             //epsilon = ComputeMachinePrecision();
-            coefficients = new Dictionary<int, long>();
+            coefficients = new Dictionary<int, double>();
+            roots = new Dictionary<int, double>();
         }
 
         public void ParsePoly(string poly)
@@ -42,7 +43,7 @@ namespace T6.Logic
                     var subItems = i.Split('x');
                     string power = subItems[1].Split('^')[1] != "" ? subItems[1].Split('^')[1] : "1";
                     string coeff = subItems[0] != "" ? subItems[0] : "1" ;
-                    coefficients.Add(int.Parse(power), long.Parse(coeff));
+                    coefficients.Add(int.Parse(power), double.Parse(coeff));
                 }
             }
 
@@ -51,33 +52,33 @@ namespace T6.Logic
 
         public void FindInterval()
         {
-            long A = coefficients.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
-            long a0 = coefficients.First().Value;
-            long R = (Math.Abs(a0) + A)/Math.Abs(a0);
+            double A = coefficients.Aggregate((l, r) => l.Value > r.Value ? l : r).Value;
+            double a0 = coefficients.First().Value;
+            double R = (Math.Abs(a0) + A)/Math.Abs(a0);
 
             interval = Tuple.Create(-R, R);
             //Console.WriteLine(" [" + interval.Item1 + " , " + interval.Item2 + "]");
         }
 
-        private long GetRandom()
+        private double GetRandom()
         {
             Random random = new Random();
-            return random.Next((int)interval.Item1, (int)interval.Item2);
+            return random.NextDouble() * (interval.Item2 - interval.Item1) + interval.Item1;
         }
 
-        public long ComputeHalley()
+        public double ComputeHalley()
         {
-            long x0 = GetRandom();
-            long x = GetRandom();
+            double x0 = GetRandom();
+            double x = GetRandom();
             int k = 1;
-            long fd = ComputeHorner(ComputeDerivative(coefficients), x);
-            long sd = ComputeHorner(ComputeDerivative(ComputeDerivative(coefficients)), x);
-            long xk = ComputeHorner(coefficients, x0);
-            long delta = 0;
+            double fd = ComputeHorner(ComputeDerivative(coefficients), x);
+            double sd = ComputeHorner(ComputeDerivative(ComputeDerivative(coefficients)), x);
+            double xk = ComputeHorner(coefficients, x0);
+            double delta = 0;
             do
             {
                 //Console.WriteLine(k);
-                long A = 2 * ((long)Math.Pow(fd, 2)) - xk * sd;
+                double A = 2 * ((double)Math.Pow(fd, 2)) - xk * sd;
                 if (Math.Abs(A) > epsilon || A != 0)
                 {
                     delta = (ComputeHorner(coefficients, x) * ComputeHorner(ComputeDerivative(coefficients), x)) / A;
@@ -92,7 +93,13 @@ namespace T6.Logic
 
             if (Math.Abs(delta) < epsilon)
             {
-                roots.Add(roots.Count, x);
+
+                //System.Console.WriteLine(x);
+                if (ValidateRoots(x))
+                {
+                    //System.Console.WriteLine(x);
+                    roots.Add(roots.Count, x);
+                }
                 return x;
             }
             else
@@ -101,9 +108,9 @@ namespace T6.Logic
             }
         }
 
-        public Dictionary<int, long> ComputeDerivative(Dictionary<int, long> p)
+        public Dictionary<int, double> ComputeDerivative(Dictionary<int, double> p)
         {
-            Dictionary<int, long> derivative = new Dictionary<int, long>();
+            Dictionary<int, double> derivative = new Dictionary<int, double>();
             foreach (var c in p)
             {
                 if(c.Key != 0)
@@ -113,9 +120,9 @@ namespace T6.Logic
             return derivative;
         }
 
-        public long ComputeHorner(Dictionary<int, long> polyDictionary, long x)
+        public double ComputeHorner(Dictionary<int, double> polyDictionary, double x)
         {
-            long result = 0;
+            double result = 0;
             foreach (var p in polyDictionary)
             {
                 result += p.Value;
@@ -125,9 +132,15 @@ namespace T6.Logic
             return result;
         }
 
-        public void ValidateRoots()
+        public bool ValidateRoots(double x)
         {
+            foreach (var r in roots)
+            {
+                if (Math.Abs(x - r.Value) < 0.1)
+                    return false;
+            }
 
+            return true;
         }
 
         public void WriteSolutionInFile(string fileName)
